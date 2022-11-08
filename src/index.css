@@ -2,13 +2,6 @@
   -webkit-font-smoothing: antialiased;
   /* -moz-osx-font-smoothing: grayscale; */
 }
-/* 
-.MuiCard-root.same-height {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-} */
 
 .trimmedTitle {
   display: -webkit-box;

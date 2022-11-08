@@ -1,5 +1,6 @@
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
 import { Link, matchPath, useLocation } from "react-router-dom";
 
 const HomeTab = () => {
@@ -21,10 +22,12 @@ const HomeTab = () => {
   const currentTab = routeMatch?.pattern?.path;
 
   return (
-    <Tabs value={currentTab} sx={{ marginBottom: "20px" }}>
-      <Tab label="Newest" value="/" to="/" component={Link} />
-      <Tab label="Popular" value="/popular" to="/popular" component={Link} />
-    </Tabs>
+    <Box>
+      <Tabs value={currentTab}>
+        <Tab label="Newest" value="/" to="/" component={Link} />
+        <Tab label="Popular" value="/popular" to="/popular" component={Link} />
+      </Tabs>
+    </Box>
   );
 };
 

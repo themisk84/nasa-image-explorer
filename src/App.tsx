@@ -9,7 +9,7 @@ import SearchBar from "./components/SearchBar";
 import RouterComponent from "./components/RouterComponent";
 import Newest from "./pages/Newest";
 import Popular from "./pages/Popular";
-import DetailedCard from "./components/DetailedCard";
+import DetailedCard from "./pages/DetailedCard";
 
 import DescriptiveCard from "./components/DescriptiveCard";
 import SearchResultsPage from "./pages/SearchResultsPage";

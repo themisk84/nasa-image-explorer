@@ -43,45 +43,39 @@ const SearchBar = (): JSX.Element => {
   };
 
   return (
-    <>
-      <Box>
-        <form onSubmit={onFormSubmit}>
-          <FormControl>
-            <Box
-              sx={{
-                "& > :not(style)": { m: 1, width: "50ch" },
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <TextField
-                id="outlined-basic"
-                label="Search"
-                variant="outlined"
-                value={keyword}
-                onChange={(event) => setKeyword(event.target.value)}
-              />
-              <TextField
-                id="outlined-basic"
-                label="Location"
-                variant="outlined"
-                value={location}
-                onChange={(event) => setLocation(event.target.value)}
-              />
-              <Box sx={{ width: "100%" }}>
-                <Button
-                  variant="contained"
-                  sx={{ width: "100%" }}
-                  type="submit"
-                >
-                  Search
-                </Button>
-              </Box>
+    <Box>
+      <form onSubmit={onFormSubmit}>
+        <FormControl>
+          <Box
+            sx={{
+              "& > :not(style)": { m: 1, width: "46ch" },
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <TextField
+              id="outlined-basic"
+              label="Search"
+              variant="outlined"
+              value={keyword}
+              onChange={(event) => setKeyword(event.target.value)}
+            />
+            <TextField
+              id="outlined-basic"
+              label="Location"
+              variant="outlined"
+              value={location}
+              onChange={(event) => setLocation(event.target.value)}
+            />
+            <Box sx={{ width: "100%" }}>
+              <Button variant="contained" sx={{ width: "100%" }} type="submit">
+                Search
+              </Button>
             </Box>
-          </FormControl>
-        </form>
-      </Box>
-    </>
+          </Box>
+        </FormControl>
+      </form>
+    </Box>
   );
 };
 

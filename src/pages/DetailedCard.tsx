@@ -20,8 +20,8 @@ import {
 } from "../models/model";
 import { fetchData, fetchExifData } from "../utils/functions";
 import { EXIF_DATA_URL, SEARCH_URL } from "../utils/urls";
-import ExifDataTable from "./ExifDataTable";
-import ImageDetailCard from "./ImageDetailCard";
+import ExifDataTable from "../components/ExifDataTable";
+import ImageDetailCard from "../components/ImageDetailCard";
 
 const DetailedCard = (): JSX.Element => {
   const [exifData, setExifData] = useState<ExifData>();
@@ -57,8 +57,8 @@ const DetailedCard = (): JSX.Element => {
       <Box
         sx={{
           paddingTop: "24px",
-
-          borderColor: "rgba(0, ,0,0, 0.12)",
+          borderBottom: "1px solid",
+          borderColor: "rgba(0, 0, 0, 0.12)",
           backgroundColor: "white",
         }}
       >
@@ -103,7 +103,7 @@ const DetailedCard = (): JSX.Element => {
                   alignItems: "center",
                 }}
               >
-                <InfoOutlinedIcon />
+                <InfoOutlinedIcon sx={{ color: "rgba(0, 0, 0, 0.54)" }} />
               </Box>
               {imageDetails?.items.map((item) =>
                 item.data.map((element) => (
@@ -130,7 +130,7 @@ const DetailedCard = (): JSX.Element => {
                   alignItems: "center",
                 }}
               >
-                <HomeIcon />
+                <HomeIcon sx={{ color: "rgba(0, 0, 0, 0.54)" }} />
               </Box>
               {imageDetails?.items.map((item) =>
                 item.data.map((element) => (
@@ -157,18 +157,30 @@ const DetailedCard = (): JSX.Element => {
                   alignItems: "center",
                 }}
               >
-                <CalendarMonthOutlinedIcon />
+                <CalendarMonthOutlinedIcon
+                  sx={{ color: "rgba(0, 0, 0, 0.54)" }}
+                />
               </Box>
-              {imageDetails?.items.map((item) =>
-                item.data.map((element) => (
-                  <Typography
-                    variant="body2"
-                    sx={{ color: " rgba(0, 0, 0, 0.54)" }}
-                  >
-                    {element.date_created}
-                  </Typography>
-                ))
-              )}
+              {imageDetails?.items.map((item) => {
+                return item.data.map((element) => {
+                  const datefied = new Date(
+                    element.date_created
+                  ).toLocaleDateString("en-us", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  });
+
+                  return (
+                    <Typography
+                      variant="body2"
+                      sx={{ color: " rgba(0, 0, 0, 0.54)" }}
+                    >
+                      Created {datefied}
+                    </Typography>
+                  );
+                });
+              })}
             </Box>
           </Box>
           <Tabs value={selectedTab} onChange={handleChangeTabs}>
@@ -182,7 +194,13 @@ const DetailedCard = (): JSX.Element => {
           {selectedTab === 0 &&
             imageDetails?.items.map((item: CardData) => {
               return item.data.map((element: NasaData): JSX.Element => {
-                const datefied = new Date(element.date_created).toDateString();
+                const datefied = new Date(
+                  element.date_created
+                ).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                });
 
                 return (
                   <ImageDetailCard

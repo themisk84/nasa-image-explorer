@@ -5,6 +5,7 @@ import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
 import CardActionArea from "@mui/material/CardActionArea";
 import Typography from "@mui/material/Typography";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
 import { useNavigate } from "react-router-dom";
 
@@ -18,14 +19,14 @@ interface DescriptiveCardProps {
   keywords?: string[];
 }
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2", transform: "scale(0.8)" }}
-  >
-    .
-  </Box>
-);
+// const bull = (
+//   <Box
+//     component="span"
+//     sx={{ display: "inline-block", mx: "2", transform: "scale(0.8)" }}
+//   >
+//     .
+//   </Box>
+// );
 
 const DescriptiveCard = ({
   image,
@@ -57,11 +58,12 @@ const DescriptiveCard = ({
           <Typography
             component="div"
             variant="subtitle2"
-            color="#1976d2"
-            align="center"
+            color="rgb(25, 118, 210)"
+            overflow={"hidden"}
+            textOverflow={"ellipsis"}
           >
             {center}
-            {bull}
+            <FiberManualRecordIcon sx={{ fontSize: "6px" }} />
             {date}
           </Typography>
           <Box sx={{ paddingTop: "8px" }} />

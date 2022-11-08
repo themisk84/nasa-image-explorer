@@ -10,7 +10,7 @@ const Header = (): JSX.Element => {
         <Typography variant="h5">NASA Image Explorer</Typography>
       </Box>
       <Divider />
-      <Box></Box>
+      <Box sx={{ paddingTop: "24px" }} />
     </>
   );
 };

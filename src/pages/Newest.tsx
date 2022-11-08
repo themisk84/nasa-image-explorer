@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
 import { NEWEST_URL, SEARCH_URL } from "../utils/urls";
 
@@ -20,10 +21,6 @@ import { useNavigate } from "react-router-dom";
 
 const Newest = () => {
   const [newPosts, setNewPosts] = useState<Collection>();
-  // const [keyword, setKeyword] = useState<string>("");
-  // const [location, setLocation] = useState<string>("");
-
-  // const navigate = useNavigate();
 
   const fetchNewest = useCallback(async () => {
     const data: BackendResponse = await fetchData(NEWEST_URL);
@@ -48,44 +45,51 @@ const Newest = () => {
   // };
 
   return (
-    <Box sx={{ paddingTop: "64px", paddingBottom: "80px" }}>
-      <Box sx={{ marginBottom: "24px" }}>
+    <Container>
+      <Box sx={{ paddingTop: "64px", paddingBottom: "80px" }}>
         <Header />
-      </Box>
-      <Box sx={{ display: "flex" }}>
-        <SearchBar />
-        <Box>
-          <HomeTab />
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              paddingTop: "24px",
-              gap: "24px",
-            }}
-          >
-            {newPosts?.items.map((item: CardData) => {
-              return item.data.map((element: NasaData): JSX.Element => {
-                const datefied = new Date(element.date_created).toDateString();
+        <Box sx={{ display: "flex" }}>
+          <SearchBar />
+          <Box sx={{ paddingRight: "24px" }} />
+          <Box>
+            <HomeTab />
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                paddingTop: "24px",
+                gap: "24px",
+              }}
+            >
+              {newPosts?.items.map((item: CardData) => {
+                return item.data.map((element: NasaData): JSX.Element => {
+                  const datefied = new Date(
+                    element.date_created
+                  ).toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  });
 
-                return (
-                  <DescriptiveCard
-                    key={element.nasa_id}
-                    image={item.links[0].href}
-                    title={element.title}
-                    center={element.center}
-                    date={datefied}
-                    description={element.description}
-                    id={element.nasa_id}
-                    keywords={element.keywords}
-                  />
-                );
-              });
-            })}
+                  return (
+                    <DescriptiveCard
+                      key={element.nasa_id}
+                      image={item.links[0].href}
+                      title={element.title}
+                      center={element.center}
+                      date={datefied}
+                      description={element.description}
+                      id={element.nasa_id}
+                      keywords={element.keywords}
+                    />
+                  );
+                });
+              })}
+            </Box>
           </Box>
         </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 
