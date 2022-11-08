@@ -20,9 +20,6 @@ const HomeTab = () => {
   const routeMatch = useRouteMatch(["/", "/popular"]);
   const currentTab = routeMatch?.pattern?.path;
 
-  console.log(currentTab);
-  console.log(routeMatch);
-
   return (
     <Tabs value={currentTab} sx={{ marginBottom: "20px" }}>
       <Tab label="Newest" value="/" to="/" component={Link} />

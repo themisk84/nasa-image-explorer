@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -9,29 +9,59 @@ import Typography from "@mui/material/Typography";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { Tab } from "@mui/material";
+import { useParams } from "react-router-dom";
 
-interface DetailedCardProps {
-  id: string;
-  image: string;
-  title: string;
-  center: string;
-  date: string;
-  description: string;
-  keywords?: string | string[];
-}
+import {
+  BackendResponse,
+  Collection,
+  ExifData,
+  CardData,
+  NasaData,
+} from "../models/model";
+import { fetchData, fetchExifData } from "../utils/functions";
+import { EXIF_DATA_URL, SEARCH_URL } from "../utils/urls";
+import ExifDataTable from "./ExifDataTable";
+import ImageDetailCard from "./ImageDetailCard";
 
-const DetailedCard = ({
-  id,
-  title,
-  center,
-  image,
-  date,
-  description,
-  keywords,
-}: DetailedCardProps): JSX.Element => {
+const DetailedCard = (): JSX.Element => {
+  const [exifData, setExifData] = useState<ExifData>();
+  const [imageDetails, setImageDetails] = useState<Collection>();
+  const [selectedTab, setSelectedTab] = useState(0);
+  const { id } = useParams();
+
+  const getExifDetails = useCallback(async () => {
+    const data: ExifData = await fetchExifData(EXIF_DATA_URL(id));
+    setExifData(data);
+  }, [id]);
+
+  const getImageDetails = useCallback(async () => {
+    const data: BackendResponse = await fetchData(SEARCH_URL(id));
+    setImageDetails(data.collection);
+  }, [id]);
+
+  useEffect(() => {
+    getImageDetails();
+    getExifDetails();
+  }, [getExifDetails, getImageDetails]);
+
+  const handleChangeTabs = (
+    event: React.SyntheticEvent,
+    newValue: number
+  ): void => {
+    setSelectedTab(newValue);
+  };
+
+  console.log(imageDetails);
   return (
-    <Box>
-      <Box>
+    <Box sx={{ minHeight: "100vh", backgroundColor: "#F9FAFB" }}>
+      <Box
+        sx={{
+          paddingTop: "24px",
+
+          borderColor: "rgba(0, ,0,0, 0.12)",
+          backgroundColor: "white",
+        }}
+      >
         <Container>
           <Breadcrumbs aria-label="breadcrump">
             <Link
@@ -43,37 +73,141 @@ const DetailedCard = ({
               <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
               NASA Image Explorer
             </Link>
-            {title}
+            {imageDetails?.items.map((item) =>
+              item.data.map((element) => (
+                <Typography color={"rgba(0,0,0, 0.87)"}>
+                  {element.title}
+                </Typography>
+              ))
+            )}
           </Breadcrumbs>
-          <Box>
-            <Typography>{title}</Typography>
+          <Box sx={{ paddingTop: "8px", paddingBottom: "8px" }}>
+            {imageDetails?.items.map((item) =>
+              item.data.map((element) => (
+                <Typography variant="h4">{element.title}</Typography>
+              ))
+            )}
           </Box>
-          <Box>
-            <Box>
-              <Box>
-                <InfoOutlinedIcon></InfoOutlinedIcon>
+          <Box sx={{ display: "flex", paddingBottom: "16px" }}>
+            <Box
+              sx={{
+                paddingRight: "16px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  paddingRight: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <InfoOutlinedIcon />
               </Box>
-              <Typography variant="body2">{id}</Typography>
+              {imageDetails?.items.map((item) =>
+                item.data.map((element) => (
+                  <Typography
+                    variant="body2"
+                    sx={{ color: " rgba(0, 0, 0, 0.54)" }}
+                  >
+                    {element.nasa_id}
+                  </Typography>
+                ))
+              )}
             </Box>
-            <Box>
-              <Box>
-                <HomeIcon></HomeIcon>
+            <Box
+              sx={{
+                paddingRight: "16px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  paddingRight: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <HomeIcon />
               </Box>
-              <Typography variant="body2">{center}</Typography>
+              {imageDetails?.items.map((item) =>
+                item.data.map((element) => (
+                  <Typography
+                    variant="body2"
+                    sx={{ color: " rgba(0, 0, 0, 0.54)" }}
+                  >
+                    {element.center}
+                  </Typography>
+                ))
+              )}
             </Box>
-            <Box>
-              <Box>
-                <CalendarMonthOutlinedIcon></CalendarMonthOutlinedIcon>
+            <Box
+              sx={{
+                paddingRight: "16px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  paddingRight: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <CalendarMonthOutlinedIcon />
               </Box>
-              <Typography variant="body2">{date}</Typography>
+              {imageDetails?.items.map((item) =>
+                item.data.map((element) => (
+                  <Typography
+                    variant="body2"
+                    sx={{ color: " rgba(0, 0, 0, 0.54)" }}
+                  >
+                    {element.date_created}
+                  </Typography>
+                ))
+              )}
             </Box>
           </Box>
-          <Tabs>
-            <Tab label="IMAGE"></Tab>
-            <Tab label="EXIF DATA"></Tab>
+          <Tabs value={selectedTab} onChange={handleChangeTabs}>
+            <Tab label="IMAGE" />
+            <Tab label="EXIF DATA" />
           </Tabs>
         </Container>
       </Box>
+      <Container>
+        <Box sx={{ paddingTop: "24px", paddingBottom: "80px" }}>
+          {selectedTab === 0 &&
+            imageDetails?.items.map((item: CardData) => {
+              return item.data.map((element: NasaData): JSX.Element => {
+                const datefied = new Date(element.date_created).toDateString();
+
+                return (
+                  <ImageDetailCard
+                    key={element.nasa_id}
+                    image={item.links[0].href}
+                    title={element.title}
+                    center={element.center}
+                    date={datefied}
+                    description={element.description}
+                    id={element.nasa_id}
+                    keywords={element.keywords}
+                  />
+                );
+              });
+            })}
+          {selectedTab === 1 && (
+            <ExifDataTable
+              apertureValue={exifData?.["EXIF:ApertureValue"]}
+              artist={exifData?.["EXIF:Artist"]}
+              cfaPattern={exifData?.["EXIF:CFAPattern"]}
+              colorSpace={exifData?.["EXIF:ColorSpace"]}
+            />
+          )}
+        </Box>
+      </Container>
     </Box>
   );
 };

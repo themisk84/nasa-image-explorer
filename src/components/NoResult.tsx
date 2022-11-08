@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 
 const NoResult = () => {
   return (
-    <Paper>
+    <Paper sx={{ width: "100%" }}>
       <Alert severity="info" variant="outlined">
         No search results were found
         <Typography sx={{ fontSize: "10px" }}>

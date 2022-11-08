@@ -6,14 +6,29 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 
-const ExifDataTable = () => {
-  const keys: string[] = [
-    "ApertureValue",
-    "Artist",
-    "CFAPattern",
-    "ColorSpace",
-  ];
+interface ExifdataProps {
+  apertureValue?: number;
+  artist?: string;
+  cfaPattern?: string;
+  colorSpace?: string;
+}
 
+const ExifDataTable = ({
+  apertureValue,
+  artist,
+  cfaPattern,
+  colorSpace,
+}: ExifdataProps): JSX.Element => {
+  // const keys: string[] = [
+  //   "ApertureValue",
+  //   "Artist",
+  //   "CFAPattern",
+  //   "ColorSpace",
+  // ];
+
+  // const dataTable: object[] = {
+  //   keys: keys
+  // }
   return (
     <Box>
       <Paper>
@@ -25,12 +40,22 @@ const ExifDataTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {keys.map((key) => (
-              <TableRow key={key}>
-                <TableCell>{key}</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            ))}
+            <TableRow>
+              <TableCell>ApertureValue</TableCell>
+              <TableCell>{apertureValue}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Artist</TableCell>
+              <TableCell>{artist}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>CFAPattern</TableCell>
+              <TableCell>{cfaPattern}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>ColorSpace</TableCell>
+              <TableCell>{colorSpace}</TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </Paper>

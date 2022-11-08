@@ -30,3 +30,10 @@ export interface Collection {
 export interface BackendResponse {
   collection: Collection;
 }
+
+export interface ExifData {
+  "EXIF:ApertureValue": number;
+  "EXIF:Artist": string;
+  "EXIF:CFAPattern": string;
+  "EXIF:ColorSpace": string;
+}

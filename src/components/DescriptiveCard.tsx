@@ -6,12 +6,15 @@ import Box from "@mui/material/Box";
 import CardActionArea from "@mui/material/CardActionArea";
 import Typography from "@mui/material/Typography";
 
+import { useNavigate } from "react-router-dom";
+
 interface DescriptiveCardProps {
   image: string;
   title: string;
   center: string;
   date: string;
   description: string;
+  id: string;
   keywords?: string[];
 }
 
@@ -31,10 +34,16 @@ const DescriptiveCard = ({
   date,
   description,
   keywords,
+  id,
 }: DescriptiveCardProps) => {
+  const navigate = useNavigate();
+
+  const goToDetailCard = (id: string) => {
+    navigate(`/details/${id}`);
+  };
   return (
     <Card sx={{ height: "480px" }}>
-      <CardActionArea>
+      <CardActionArea onClick={() => goToDetailCard(id)}>
         <CardMedia component="img" image={image} height="200px" />
         <CardContent
           sx={{

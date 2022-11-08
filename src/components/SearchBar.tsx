@@ -10,9 +10,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { fetchData } from "../utils/functions";
 import { NEWEST_URL, SEARCH_URL } from "../utils/urls";
 import { Collection, NasaData, CardData } from "../models/model";
-
 import DescriptiveCard from "./DescriptiveCard";
-import NoResult from "./NoResult";
 
 // interface SearchBarProps {
 //   keyword?: string;
@@ -22,49 +20,32 @@ import NoResult from "./NoResult";
 //   onSubmitForm: (event: React.FormEvent) => void;
 // }
 
+// const SearchBar = ({
+//   keyword,
+//   location,
+//   setKeyword,
+//   setLocation,
+//   onSubmitForm,
+// }: SearchBarProps): JSX.Element => {
+// const [keyword, setKeyword] = useState<string>("");
+// const [location, setLocation] = useState<string>("");
+// const [results, setResults] = useState<Collection>();
+
 const SearchBar = (): JSX.Element => {
   const [keyword, setKeyword] = useState<string>("");
   const [location, setLocation] = useState<string>("");
-  const [results, setResults] = useState<Collection>();
 
-  // const fetchNewest = useCallback(async () => {
-  //   const data: BackendResponse = await fetchData(NEWEST_URL);
-  //   setNewPosts(data.collection);
-  // }, []);
+  const navigate = useNavigate();
 
-  // useEffect((): void => {
-  //   fetchNewest();
-  // }, [fetchNewest]);
-
-  const handleSeachKeywords = (
-    event: React.FormEvent,
-    word: string,
-    place: string
-  ): void => {
+  const onFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-
-    if (location.length === 0 && keyword.length === 0) {
-      fetch(NEWEST_URL)
-        .then((res) => res.json())
-        .then((data) => {
-          setResults(data);
-        });
-    } else {
-      fetch(SEARCH_URL(word, place))
-        .then((res) => res.json())
-        .then((data) => console.log(data));
-      console.log("it works");
-    }
+    navigate(`/search?q=${keyword}&location=${location}`);
   };
-
-  console.log(results);
 
   return (
     <>
       <Box>
-        <form
-          onSubmit={(event) => handleSeachKeywords(event, keyword, location)}
-        >
+        <form onSubmit={onFormSubmit}>
           <FormControl>
             <Box
               sx={{
