@@ -9,6 +9,9 @@ export const EXIF_DATA_URL = (id: string = ""): string =>
 export const SEARCH_URL = (
   keyword: string = "",
   location: string = "",
-  id: string = ""
+  page: number
 ) =>
-  `https://images-api.nasa.gov/search?q=${keyword}&location=${location}&nasa_id=${id}`;
+  `https://images-api.nasa.gov/search?q=${keyword}&location=${location}&page=${page}&media_type=image`;
+
+export const SEARCH_BY_ID_URL = (id: string = "") =>
+  `https://images-api.nasa.gov/search?nasa_id=${id}`;

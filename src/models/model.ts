@@ -7,6 +7,7 @@ export interface NasaData {
   photographer: string;
   title: string;
   keywords?: string[];
+  location?: string;
 }
 
 export interface NasaLinks {
@@ -21,10 +22,15 @@ export interface CardData {
   links: NasaLinks[];
 }
 
+interface Metadata {
+  total_hits: number;
+}
+
 export interface Collection {
   href: string;
   items: CardData[];
   version: string;
+  metadata?: Metadata;
 }
 
 export interface BackendResponse {

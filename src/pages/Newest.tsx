@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 
-import { NEWEST_URL, SEARCH_URL } from "../utils/urls";
-
-import { fetchData } from "../utils/functions";
+import { NEWEST_URL } from "../utils/urls";
+import { fetchData, filterData } from "../utils/functions";
 
 import {
   BackendResponse,
@@ -17,32 +16,19 @@ import DescriptiveCard from "../components/DescriptiveCard";
 import HomeTab from "../components/HomeTab";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
-import { useNavigate } from "react-router-dom";
 
-const Newest = () => {
+const Newest = (): JSX.Element => {
   const [newPosts, setNewPosts] = useState<Collection>();
 
-  const fetchNewest = useCallback(async () => {
-    const data: BackendResponse = await fetchData(NEWEST_URL);
-    setNewPosts(data.collection);
-  }, []);
-
   useEffect((): void => {
+    const fetchNewest = async () => {
+      const data: BackendResponse = await fetchData(NEWEST_URL);
+      const filtered = filterData(data.collection);
+      setNewPosts(filtered);
+    };
+
     fetchNewest();
-  }, [fetchNewest]);
-
-  // console.log(keyword);
-
-  // const handleSubmit = async (
-  //   event: React.FormEvent,
-  //   word: string,
-  //   place: string
-  // ) => {
-  //   event?.preventDefault();
-
-  //   const data: BackendResponse = await fetchData(SEARCH_URL(word, place));
-  //   setNewPosts(data.collection);
-  // };
+  }, []);
 
   return (
     <Container>

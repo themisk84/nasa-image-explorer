@@ -5,6 +5,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
+import Typography from "@mui/material/Typography";
 
 interface ExifdataProps {
   apertureValue?: number;
@@ -19,19 +20,15 @@ const ExifDataTable = ({
   cfaPattern,
   colorSpace,
 }: ExifdataProps): JSX.Element => {
-  // const keys: string[] = [
-  //   "ApertureValue",
-  //   "Artist",
-  //   "CFAPattern",
-  //   "ColorSpace",
-  // ];
-
-  // const dataTable: object[] = {
-  //   keys: keys
-  // }
   return (
     <Box>
       <Paper>
+        <Box sx={{ marginLeft: "15px", paddingTop: "15px" }}>
+          <Typography variant="h5">EXIF Data</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Meatada stored on the image file
+          </Typography>
+        </Box>
         <Table>
           <TableHead>
             <TableRow>

@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 
 import { POPULAR_URL } from "../utils/urls";
+import { fetchData, filterData } from "../utils/functions";
 
-import { fetchData } from "../utils/functions";
 import {
   BackendResponse,
   Collection,
@@ -20,14 +20,15 @@ import SearchBar from "../components/SearchBar";
 const Popular = () => {
   const [popular, setPopular] = useState<Collection>();
 
-  const fetchNewest = useCallback(async () => {
-    const data: BackendResponse = await fetchData(POPULAR_URL);
-    setPopular(data.collection);
-  }, []);
-
   useEffect((): void => {
-    fetchNewest();
-  }, [fetchNewest]);
+    const fetchPopular = async () => {
+      const data: BackendResponse = await fetchData(POPULAR_URL);
+      const filtered = filterData(data.collection);
+      setPopular(filtered);
+    };
+
+    fetchPopular();
+  }, []);
 
   return (
     <Container>

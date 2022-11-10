@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Tabs from "@mui/material/Tabs";
 import Link from "@mui/material/Link";
-import HomeIcon from "@mui/icons-material/Home";
+import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
+import HomeIcon from "@mui/icons-material/Home";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-import { Tab } from "@mui/material";
-import { useParams } from "react-router-dom";
 
 import {
   BackendResponse,
@@ -18,8 +18,10 @@ import {
   CardData,
   NasaData,
 } from "../models/model";
+
 import { fetchData, fetchExifData } from "../utils/functions";
-import { EXIF_DATA_URL, SEARCH_URL } from "../utils/urls";
+import { EXIF_DATA_URL, SEARCH_BY_ID_URL } from "../utils/urls";
+
 import ExifDataTable from "../components/ExifDataTable";
 import ImageDetailCard from "../components/ImageDetailCard";
 
@@ -29,20 +31,20 @@ const DetailedCard = (): JSX.Element => {
   const [selectedTab, setSelectedTab] = useState(0);
   const { id } = useParams();
 
-  const getExifDetails = useCallback(async () => {
-    const data: ExifData = await fetchExifData(EXIF_DATA_URL(id));
-    setExifData(data);
-  }, [id]);
-
-  const getImageDetails = useCallback(async () => {
-    const data: BackendResponse = await fetchData(SEARCH_URL(id));
-    setImageDetails(data.collection);
-  }, [id]);
-
   useEffect(() => {
+    const getExifDetails = async () => {
+      const data: ExifData = await fetchExifData(EXIF_DATA_URL(id));
+      setExifData(data);
+    };
+
+    const getImageDetails = async () => {
+      const data: BackendResponse = await fetchData(SEARCH_BY_ID_URL(id));
+      setImageDetails(data.collection);
+    };
+
     getImageDetails();
     getExifDetails();
-  }, [getExifDetails, getImageDetails]);
+  }, [id]);
 
   const handleChangeTabs = (
     event: React.SyntheticEvent,
@@ -51,7 +53,6 @@ const DetailedCard = (): JSX.Element => {
     setSelectedTab(newValue);
   };
 
-  console.log(imageDetails);
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: "#F9FAFB" }}>
       <Box
@@ -75,7 +76,7 @@ const DetailedCard = (): JSX.Element => {
             </Link>
             {imageDetails?.items.map((item) =>
               item.data.map((element) => (
-                <Typography color={"rgba(0,0,0, 0.87)"}>
+                <Typography key={element.nasa_id} color={"rgba(0,0,0, 0.87)"}>
                   {element.title}
                 </Typography>
               ))
@@ -84,7 +85,9 @@ const DetailedCard = (): JSX.Element => {
           <Box sx={{ paddingTop: "8px", paddingBottom: "8px" }}>
             {imageDetails?.items.map((item) =>
               item.data.map((element) => (
-                <Typography variant="h4">{element.title}</Typography>
+                <Typography key={element.nasa_id} variant="h4">
+                  {element.title}
+                </Typography>
               ))
             )}
           </Box>
@@ -108,6 +111,7 @@ const DetailedCard = (): JSX.Element => {
               {imageDetails?.items.map((item) =>
                 item.data.map((element) => (
                   <Typography
+                    key={element.nasa_id}
                     variant="body2"
                     sx={{ color: " rgba(0, 0, 0, 0.54)" }}
                   >
@@ -135,6 +139,7 @@ const DetailedCard = (): JSX.Element => {
               {imageDetails?.items.map((item) =>
                 item.data.map((element) => (
                   <Typography
+                    key={element.nasa_id}
                     variant="body2"
                     sx={{ color: " rgba(0, 0, 0, 0.54)" }}
                   >
@@ -173,6 +178,7 @@ const DetailedCard = (): JSX.Element => {
 
                   return (
                     <Typography
+                      key={element.nasa_id}
                       variant="body2"
                       sx={{ color: " rgba(0, 0, 0, 0.54)" }}
                     >
@@ -207,11 +213,12 @@ const DetailedCard = (): JSX.Element => {
                     key={element.nasa_id}
                     image={item.links[0].href}
                     title={element.title}
-                    center={element.center}
+                    photographer={element.photographer}
                     date={datefied}
                     description={element.description}
                     id={element.nasa_id}
                     keywords={element.keywords}
+                    location={element.location}
                   />
                 );
               });

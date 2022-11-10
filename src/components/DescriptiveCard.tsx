@@ -19,15 +19,6 @@ interface DescriptiveCardProps {
   keywords?: string[];
 }
 
-// const bull = (
-//   <Box
-//     component="span"
-//     sx={{ display: "inline-block", mx: "2", transform: "scale(0.8)" }}
-//   >
-//     .
-//   </Box>
-// );
-
 const DescriptiveCard = ({
   image,
   title,
@@ -36,7 +27,7 @@ const DescriptiveCard = ({
   description,
   keywords,
   id,
-}: DescriptiveCardProps) => {
+}: DescriptiveCardProps): JSX.Element => {
   const navigate = useNavigate();
 
   const goToDetailCard = (id: string) => {
@@ -59,11 +50,14 @@ const DescriptiveCard = ({
             component="div"
             variant="subtitle2"
             color="rgb(25, 118, 210)"
-            overflow={"hidden"}
-            textOverflow={"ellipsis"}
           >
             {center}
-            <FiberManualRecordIcon sx={{ fontSize: "6px" }} />
+            <FiberManualRecordIcon
+              sx={{
+                fontSize: "5px",
+                padding: "0 3px 3px 3px",
+              }}
+            />
             {date}
           </Typography>
           <Box sx={{ paddingTop: "8px" }} />
@@ -105,6 +99,10 @@ const DescriptiveCard = ({
                   sx={{
                     color: "rgb(63, 81, 181)",
                     backgroundColor: "rgb(232, 234, 246);",
+                    ":nth-of-type(even)": {
+                      color: "#771ec5b9",
+                      backgroundColor: "rgba(237, 224, 240, 0.9)",
+                    },
                   }}
                 />
               );

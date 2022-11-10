@@ -3,7 +3,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { Link, matchPath, useLocation } from "react-router-dom";
 
-const HomeTab = () => {
+const HomeTab = (): JSX.Element => {
   const useRouteMatch = (patterns: readonly string[]) => {
     const { pathname } = useLocation();
 
