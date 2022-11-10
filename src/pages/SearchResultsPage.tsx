@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Pagination from "@mui/material/Pagination";
-import { useLocation, useNavigate } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
@@ -20,6 +21,18 @@ import { fetchData } from "../utils/functions";
 import { NEWEST_URL, SEARCH_URL } from "../utils/urls";
 
 import TotalResults from "../components/TotalResults";
+
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 300,
+      sm: 568,
+      md: 768,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+});
 
 const SearchResultsPage = (): JSX.Element => {
   const search = useLocation().search;
@@ -59,74 +72,93 @@ const SearchResultsPage = (): JSX.Element => {
   };
 
   return (
-    <Container>
-      <Box sx={{ paddingTop: "64px", paddingBottom: "80px" }}>
-        <Header />
-        <Box sx={{ display: "flex" }}>
-          <SearchBar />
-          <Box sx={{ paddingRight: "24px" }} />
-          {result?.items.length === 0 ? (
-            <NoResult />
-          ) : (
-            <Box>
-              <TotalResults
-                result={
-                  result?.metadata?.total_hits !== undefined
-                    ? result?.metadata?.total_hits
-                    : 0
-                }
-              />
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  paddingTop: "24px",
-                  gap: "24px",
-                }}
-              >
-                {result?.items.map((item: CardData) => {
-                  return item.data.map((element: NasaData): JSX.Element => {
-                    const datefied = new Date(
-                      element.date_created
-                    ).toDateString();
-
-                    return (
-                      <DescriptiveCard
-                        key={element.nasa_id}
-                        image={item.links[0].href}
-                        title={element.title}
-                        center={element.center}
-                        date={datefied}
-                        description={element.description}
-                        id={element.nasa_id}
-                        keywords={element.keywords}
-                      />
-                    );
-                  });
-                })}
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  paddingTop: "24px",
-                }}
-              >
-                <Pagination
-                  count={
+    <ThemeProvider theme={theme}>
+      <Container>
+        <Box sx={{ paddingTop: "64px", paddingBottom: "80px" }}>
+          <Header />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: {
+                xs: "column",
+                sm: "column",
+                md: "column",
+                lg: "row",
+                xl: "row",
+              },
+            }}
+          >
+            <SearchBar />
+            <Box sx={{ paddingRight: "24px" }} />
+            {result?.items.length === 0 ? (
+              <NoResult />
+            ) : (
+              <Box>
+                <TotalResults
+                  result={
                     result?.metadata?.total_hits !== undefined
-                      ? Math.ceil(result.metadata?.total_hits / 100)
-                      : 1
+                      ? result?.metadata?.total_hits
+                      : 0
                   }
-                  page={currentPage}
-                  onChange={handlePageChange}
                 />
+                <Box
+                  sx={{
+                    display: "grid",
+                    gridTemplateColumns: {
+                      xs: " 1fr",
+                      sm: " 1fr",
+                      md: "1fr 1fr",
+                      lg: "1fr 1fr",
+                      xl: "1fr 1fr",
+                    },
+                    paddingTop: "24px",
+                    gap: "24px",
+                  }}
+                >
+                  {result?.items.map((item: CardData) => {
+                    return item.data.map((element: NasaData): JSX.Element => {
+                      const datefied = new Date(
+                        element.date_created
+                      ).toDateString();
+
+                      return (
+                        <DescriptiveCard
+                          key={element.nasa_id}
+                          image={item.links[0].href}
+                          title={element.title}
+                          center={element.center}
+                          date={datefied}
+                          description={element.description}
+                          id={element.nasa_id}
+                          keywords={element.keywords}
+                        />
+                      );
+                    });
+                  })}
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingTop: "24px",
+                  }}
+                >
+                  <Pagination
+                    count={
+                      result?.metadata?.total_hits !== undefined
+                        ? Math.ceil(result.metadata?.total_hits / 100)
+                        : 1
+                    }
+                    page={currentPage}
+                    onChange={handlePageChange}
+                  />
+                </Box>
               </Box>
-            </Box>
-          )}
+            )}
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </ThemeProvider>
   );
 };
 
