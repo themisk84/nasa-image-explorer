@@ -88,8 +88,8 @@ const DetailedCard = (): JSX.Element => {
                     xs: "0.75rem",
                     sm: "0.9rem",
                     md: "1rem",
-                    lg: "1.25rem",
-                    xl: "1.5rem",
+                    lg: "1.1rem",
+                    xl: "1.2rem",
                   },
                 }}
                 color="inherit"
@@ -99,11 +99,11 @@ const DetailedCard = (): JSX.Element => {
                   sx={{
                     mr: 0.5,
                     fontSize: {
-                      xs: "0.9rem",
-                      sm: "1.1rem",
-                      md: "1.25rem",
-                      lg: "1.5rem",
-                      xl: "1.7rem",
+                      xs: "0.75rem",
+                      sm: "0.85rem",
+                      md: "1rem",
+                      lg: "1.05rem",
+                      xl: "1.1rem",
                     },
                   }}
                 />
@@ -182,9 +182,9 @@ const DetailedCard = (): JSX.Element => {
                       fontSize: {
                         xs: "0.9rem",
                         sm: "1.1rem",
-                        md: "1.25rem",
-                        lg: "1.5rem",
-                        xl: "1.7rem",
+                        md: "1.15rem",
+                        lg: "1.2rem",
+                        xl: "1.4rem",
                       },
                     }}
                   />
@@ -196,11 +196,11 @@ const DetailedCard = (): JSX.Element => {
                       sx={{
                         color: " rgba(0, 0, 0, 0.54)",
                         fontSize: {
-                          xs: "0.7rem",
-                          sm: "0.9rem",
-                          md: "1.05rem",
-                          lg: "1.2rem",
-                          xl: "1.4rem",
+                          xs: "0.6rem",
+                          sm: "0.7rem",
+                          md: "0.8rem",
+                          lg: "0.85rem",
+                          xl: "0.9rem",
                         },
                       }}
                     >
@@ -229,9 +229,9 @@ const DetailedCard = (): JSX.Element => {
                       fontSize: {
                         xs: "0.9rem",
                         sm: "1.1rem",
-                        md: "1.25rem",
-                        lg: "1.5rem",
-                        xl: "1.7rem",
+                        md: "1.15rem",
+                        lg: "1.2rem",
+                        xl: "1.4rem",
                       },
                     }}
                   />
@@ -243,11 +243,11 @@ const DetailedCard = (): JSX.Element => {
                       sx={{
                         color: " rgba(0, 0, 0, 0.54)",
                         fontSize: {
-                          xs: "0.7rem",
-                          sm: "0.9rem",
-                          md: "1.05rem",
-                          lg: "1.rem",
-                          xl: "1.4rem",
+                          xs: "0.6rem",
+                          sm: "0.7rem",
+                          md: "0.8rem",
+                          lg: "0.85rem",
+                          xl: "0.9rem",
                         },
                       }}
                     >
@@ -276,9 +276,9 @@ const DetailedCard = (): JSX.Element => {
                       fontSize: {
                         xs: "0.9rem",
                         sm: "1.1rem",
-                        md: "1.25rem",
-                        lg: "1.5rem",
-                        xl: "1.7rem",
+                        md: "1.15rem",
+                        lg: "1.2rem",
+                        xl: "1.4rem",
                       },
                     }}
                   />
@@ -299,11 +299,11 @@ const DetailedCard = (): JSX.Element => {
                         sx={{
                           color: " rgba(0, 0, 0, 0.54)",
                           fontSize: {
-                            xs: "0.7rem",
-                            sm: "0.9rem",
-                            md: "1.05rem",
-                            lg: "1.rem",
-                            xl: "1.4rem",
+                            xs: "0.6rem",
+                            sm: "0.7rem",
+                            md: "0.8rem",
+                            lg: "0.85rem",
+                            xl: "0.9rem",
                           },
                         }}
                       >
