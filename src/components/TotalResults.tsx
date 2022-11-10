@@ -74,16 +74,15 @@ const TotalResults = ({ result }: TotalResultsProps): JSX.Element => {
         </Box>
         <Box>
           <Button
-            variant="contained"
             startIcon={<ArrowBackIosIcon />}
             onClick={goToMainPage}
             sx={{
-              backgroundColor: {
-                xs: "green",
-                sm: "green",
-                md: "green",
-                lg: "rgb(25, 118, 210)",
-                xl: "rgb(25, 118, 210)",
+              variant: {
+                xs: "outlined",
+                sm: "outlined",
+                md: "outlined",
+                lg: "contained",
+                xl: "contained",
               },
             }}
           >
